@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<link rel="stylesheet" type="text/css" href="resources/css/styles-menu.css" />
+</h:head>
+<h:body>
+	<div class="ui-messages-info ui-corner-all" id="menuTitle">
+		<span class="ui-messages-info-detail"><b>Menú Usuario</b></span>
+	</div>
+	<h:form id="formMenu">
+		<p:panel header="Docente"
+		rendered="true"
+		collapsed="false"
+		styleClass="userMenuPanel">
+			<h:panelGrid columns="5" cellpadding="10" >
+				<p:menu>
+					<p:menuitem value="Autoevaluación"
+						icon="ui-icon ui-icon-clipboard"
+						actionListener="#{autoevaluacionDocenteControl.loadLaborData()}"
+						title="Cargar Labor Docente"
+						update=":mainContentPanel" />
+				</p:menu>
+				
+				
+			</h:panelGrid>
+			<f:facet name="actions">  
+         <div class="ui-panel-titlebar-icon ui-corner-all" style="margin-top:1px;">  
+						<h:outputText styleClass="ui-icon ui-icon-circle-triangle-s" />  
+         </div>  
+      </f:facet>
+		</p:panel>
+	</h:form>
+</h:body>
+</html>

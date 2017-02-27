@@ -1,0 +1,132 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<script type="text/javascript"
+		src="resources/js/primefaces-calendar-locale.js"></script>
+</h:head>
+<h:body>
+	<p:outputPanel id="panelInvestigacionLabor">
+		<div class="container-fluid">
+			<p:separator />
+			<h:form id="panelDocentesInvestigacionLabor">
+				<p:messages id="messages" showDetail="false" autoUpdate="true"
+					closable="false" showSummary="true" />
+				<p:outputPanel
+					rendered="#{evaluacionDocenteControl.docenteInvestigacionData.size()>0}">
+					<p:dataTable
+						value="#{evaluacionDocenteControl.docenteInvestigacionData}"
+						var="investigacion"
+						paginator="#{evaluacionDocenteControl.docenteInvestigacionData.size() gt 10}"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						currentPageReportTemplate="Página: {currentPage} de {totalPages}"
+						rows="10" resizableColumns="true">
+
+						<p:column style="width:60px;text-align: center"
+							headerText="EVALUAR">
+							<p:rowToggler />
+						</p:column>
+						<p:column style="text-align:center; width:80px"
+							headerText="CODIGO VRI" rendered="false">
+							<h:outputText value="#{investigacion.condigoVRI}" />
+						</p:column>
+
+						<p:column headerText="NOMBRE DE LA INVESTIGACION"
+							style="text-align:center;">
+							<h:outputText
+								value="#{evaluacionDocenteControl.nombreProyecto2(investigacion.condigoVRI).get(0)}" />
+						</p:column>
+						<p:rowExpansion>
+							<p:dataTable
+								value="#{evaluacionDocenteControl.listaDocentesLabor2(investigacion.condigoVRI)}"
+								var="docentes">
+								<p:column>
+									<h:outputText value="#{docentes}" />
+								</p:column>
+								<p:column style="width:90px;text-align: center">
+									<p:commandButton value="Evaluar"
+										update=":panelDocentesInvestigacionLabor:docentesDetalleInvestigacion"
+										oncomplete="evaluacionDialogoInvestigacion.show()"
+										actionListener="#{evaluacionDocenteControl.SaveDatos(evaluacionDocenteControl.nombreProyecto2(investigacion.condigoVRI).get(0), docentes)}">
+										<f:setPropertyActionListener value="#{investigacion}"
+											target="#{evaluacionDocenteControl.selectInvestigacion}" />
+										<f:setPropertyActionListener value="#{docentes}"
+											target="#{evaluacionDocenteControl.docentes}" />
+									</p:commandButton>
+								</p:column>
+							</p:dataTable>
+						</p:rowExpansion>
+					</p:dataTable>
+				</p:outputPanel>
+
+				<p:dialog widgetVar="evaluacionDialogoInvestigacion" modal="true"
+					showEffect="fade" hideEffect="fade" resizable="false">
+					<p:panelGrid id="docentesDetalleInvestigacion" columns="2">
+						<f:facet name="header">
+							<h:outputText value="DATOS DE LA EVALUACION" />
+						</f:facet>
+						<h:outputText value="Investigacion:" />
+						<h:outputText value="#{evaluacionDocenteControl.laborEvaluar}" />
+						<h:outputText value="Nombre Evaluado:" />
+						<h:outputText value="#{evaluacionDocenteControl.docentes}" />
+						<h:outputText value="Nombre Evaluador:" />
+						<h:outputText
+							value="#{evaluacionDocenteControl.nombreUsuario(evaluacionDocenteControl.idJefe)}" />
+						<h:outputText value="Periodo Evaluado:" />
+						<h:outputText value="2015-2" />
+						<h:outputText value="Fecha evaluacion:" />
+						<h:outputText value="#{evaluacionDocenteControl.fecha}" />
+					</p:panelGrid>
+					<p:dataTable id="formEvaluacionInvestigacion"
+						value="#{evaluacionDocenteControl.cargaListaPreguntas(2)}"
+						var="preguntas" scrollable="true" scrollHeight="350"
+						scrollWidth="1000px" style="width:1000px">
+						<p:column headerText="PREGUNTA">
+							<h:outputText value="#{preguntas}" />
+						</p:column>
+						<p:column headerText="CALIFICACION" style="width:200px">
+							<p:selectOneMenu required="false"
+								value="#{evaluacionDocenteControl.console}" style="width:200px"
+								valueChangeListener="#{evaluacionDocenteControl.updateCalificacion}">
+								<f:selectItem itemLabel="Seleccione un valor" itemValue="" />
+								<f:selectItem itemLabel="1" itemValue="1" />
+								<f:selectItem itemLabel="10" itemValue="10" />
+								<f:selectItem itemLabel="20" itemValue="20" />
+								<f:selectItem itemLabel="30" itemValue="30" />
+								<f:selectItem itemLabel="40" itemValue="40" />
+								<f:selectItem itemLabel="50" itemValue="50" />
+								<f:selectItem itemLabel="60" itemValue="60" />
+								<f:selectItem itemLabel="70" itemValue="70" />
+								<f:selectItem itemLabel="80" itemValue="80" />
+								<f:selectItem itemLabel="90" itemValue="90" />
+								<f:selectItem itemLabel="100" itemValue="100" />
+							</p:selectOneMenu>
+
+						</p:column>
+						<f:facet name="footer">
+							<p:commandButton icon="fa-send-o" value="Enviar"
+								update=":panelDocentesInvestigacionLabor"
+								actionListener="#{evaluacionDocenteControl.mostrarCalificacionInvestigacion('2',evaluacionDocenteControl.laborEvaluar,evaluacionDocenteControl.docentes,evaluacionDocenteControl.selectInvestigacion.condigoVRI,' ')}" />
+						</f:facet>
+					</p:dataTable>
+				</p:dialog>
+
+				<p:outputPanel
+					rendered="#{evaluacionDocenteControl.docenteInvestigacionData.size()==0}">
+					<div class="ui-messages-warn ui-corner-all">
+						<span class="ui-messages-warn-icon"></span>
+						<ul>
+							<li><span class="ui-messages-warn-detail">No hay
+									registros de DocenteInvestigacion</span></li>
+						</ul>
+					</div>
+				</p:outputPanel>
+			</h:form>
+
+		</div>
+	</p:outputPanel>
+</h:body>
+</html>

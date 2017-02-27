@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	
+</h:head>	
+<h:body>
+	<p:outputPanel id="panelAsesoria">
+		<div class="container-fluid">
+			<h3 style="color:#26467E ">Asignar labor asesoria</h3>	
+			<p:separator/>
+			<h:form id="panelAsignarLaborAsesoria">
+			<p:outputPanel rendered="#{evaluacionDocenteControl.actividadAsesoria.size()>0}">
+					<p:dataTable
+						value="#{evaluacionDocenteControl.actividadAsesoria}" 
+						var="asesoriaFiltrado"
+						paginator="#{evaluacionDocenteControl.actividadAsesoria.size() gt 1}"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						currentPageReportTemplate="Página: {currentPage} de {totalPages}"
+						
+						rows="10"
+						resizableColumns="true">
+						<f:facet name="header">
+							<h:outputText value="Asesoria" />
+						</f:facet>
+						<p:column style="text-align:center; width:80px" rendered="false">
+							<f:facet name="header">
+								<h:outputText value="ACTIVIDAD"></h:outputText>
+							</f:facet>
+							<h:outputText value="#{asesoriaFiltrado.actividad}" />
+						</p:column>
+						<p:column  style="text-align:center;">
+							<f:facet name="header">
+								<h:outputText value="DESCRIPCION"></h:outputText>
+							</f:facet>
+							<h:outputText value="#{evaluacionDocenteControl.nombreAsesoria(asesoriaFiltrado.actividad).get(0)}" />
+						</p:column>
+						<p:column headerText="JEFE DE LABOR">
+							<p:outputLabel value="#{evaluacionDocenteControl.jefeLaborAsesoria(asesoriaFiltrado.actividad).get(0)}"/>
+						</p:column>
+						<p:column style="width:120px;text-align: center">
+				             <p:commandButton id="buttonAsesoria" value="Asignar/Editar" update=":panelAsignarLaborAsesoria:docDetalleAsesoria" oncomplete="docDialogoAsesoria.show()" action="#{evaluacionDocenteControl.stringNull()}" icon="ui-icon-search" title="ViewAsesoria">
+				                <f:setPropertyActionListener value="#{asesoriaFiltrado}" target="#{evaluacionDocenteControl.selectAsesoria}" />
+				            </p:commandButton>
+				        </p:column>
+				</p:dataTable>
+				</p:outputPanel>
+				
+				<p:dialog widgetVar="docDialogoAsesoria" modal="true" showEffect="fade" hideEffect="fade" resizable="false" >
+		            <p:panelGrid id="docDetalleAsesoria" columns="1" >
+		                <f:facet name="header">
+		                    <h:outputText value="Escoja un profesor" />
+		                </f:facet>
+		                <p:column>
+							<p:outputLabel for="docentesEscoger"/>
+					        <p:selectOneMenu id="docentesEscoger" value="#{evaluacionDocenteControl.docenteEscoger}"  effect="fold" editable="false">
+					            <f:selectItem itemLabel="Seleccione Jefe de Labor" itemValue="" />
+					            <f:selectItems value="#{evaluacionDocenteControl.listaDocentesAsesoria(evaluacionDocenteControl.selectAsesoria.actividad)}" />
+					            <p:ajax update="docentesEscoger"/>
+					        </p:selectOneMenu>
+						</p:column>
+						<p:column style="width:90px">
+							<p:commandButton id="asignarAsesoria" value="Guardar" actionListener="#{evaluacionDocenteControl.insertJefeLabor(evaluacionDocenteControl.selectAsesoria.actividad,evaluacionDocenteControl.docenteEscoger)}" update=":panelAsignarLaborAsesoria" />		        
+						</p:column>
+		            </p:panelGrid>
+	            </p:dialog>
+				
+				<p:outputPanel rendered="#{evaluacionDocenteControl.actividadAsesoria.size()==0}">
+					<div class="ui-messages-warn ui-corner-all">
+						<span class="ui-messages-warn-icon"></span>
+						<ul>
+							<li><span class="ui-messages-warn-detail">actividadAsesoria</span>
+							</li>
+						</ul>
+					</div>
+				</p:outputPanel>
+			</h:form>
+			
+		</div>
+	</p:outputPanel>
+</h:body>
+</html>

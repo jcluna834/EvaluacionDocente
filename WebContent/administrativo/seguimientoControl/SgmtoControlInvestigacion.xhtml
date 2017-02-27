@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<script type="text/javascript"
+		src="resources/js/primefaces-calendar-locale.js"></script>
+</h:head>
+<h:body>
+	<p:outputPanel id="panelSeguimientoControl">
+		<div class="container-fluid">
+			<h3 style="color: #26467E">Seguimiento y Control de Autoevaluacion y Evaluacion</h3>
+			<p:separator />
+			<h:form id="panelSeguimiento">
+				<p:outputPanel
+					rendered="#{evaluacionDocenteControl.docentesAux.size()>0}">
+					<p:dataTable value="#{evaluacionDocenteControl.docentesAux}"
+						var="seguimiento"
+						paginator="#{evaluacionDocenteControl.docentesAux.size() gt 1}"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						currentPageReportTemplate="Página: {currentPage} de {totalPages}"
+						rows="10" resizableColumns="true">
+						<f:facet name="header">
+							<h:outputText value="Nombre Docentes que no han completado la Evaluación/Autoevaluación" />
+						</f:facet>
+						<p:column style="text-align:center; width:80px" rendered="true" >
+							<f:facet name="header">
+								<h:outputText value="Docente"></h:outputText>
+							</f:facet>
+							<h:outputText value="#{seguimiento}" />
+						</p:column>
+					</p:dataTable>
+					<br>
+					</br>
+					<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+				   <p:commandButton value="Notificar a todos" id="ajax" actionListener="#{evaluacionDocenteControl.notificar()}"/>
+				</p:outputPanel>
+				<p:outputPanel
+					rendered="#{evaluacionDocenteControl.docentesAux.size()==0}">
+					<div class="ui-messages-warn ui-corner-all">
+						<span class="ui-messages-warn-icon"></span>
+						<ul>
+							<li><span class="ui-messages-warn-detail">No hay evaluaciones pendientes para este periodo</span></li>
+						</ul>
+					</div>
+				</p:outputPanel>
+			</h:form>
+		</div>
+	</p:outputPanel>
+</h:body>
+</html>

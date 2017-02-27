@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<link rel="stylesheet" type="text/css" href="resources/css/styles-menu.css" />
+</h:head>
+<h:body>
+	<h:form>
+	    <p:growl id="message"></p:growl>
+	    <p:tabView>
+		    <p:tab title="Docencia directa">
+            <h:panelGrid columns="9" cellpadding="10">
+                <ui:include src="/Docente/autoevaluacionDocente/cargaLabor/CargaDocencia.xhtml" />
+            </h:panelGrid>
+        	</p:tab>
+        	<p:tab title="Trabajos de investigacion">
+            <h:panelGrid columns="9" cellpadding="10">
+                <ui:include src="/Docente/autoevaluacionDocente/cargaLabor/CargaTrabajosInvestigacion.xhtml" />
+            </h:panelGrid>
+        	</p:tab>
+        	<p:tab title="Investigacion">
+            <h:panelGrid columns="9" cellpadding="10">
+                <ui:include src="/Docente/autoevaluacionDocente/cargaLabor/CargaInvestigacion.xhtml" />
+            </h:panelGrid>
+        	</p:tab>
+        	<p:tab title="Administracion">
+            <h:panelGrid columns="9" cellpadding="10">
+                <ui:include src="/Docente/autoevaluacionDocente/cargaLabor/CargaAdministracion.xhtml" />
+            </h:panelGrid>
+        	</p:tab>
+        	<p:tab title="Asesoria">
+            <h:panelGrid columns="9" cellpadding="10">
+                <ui:include src="/Docente/autoevaluacionDocente/cargaLabor/CargaAsesoria.xhtml" />
+            </h:panelGrid>
+        	</p:tab>
+        	<p:tab title="Servicio">
+            <h:panelGrid columns="9" cellpadding="10">
+                <ui:include src="/Docente/autoevaluacionDocente/cargaLabor/CargaServicio.xhtml" />
+            </h:panelGrid>
+        	</p:tab>
+        	<p:tab title="Extension">
+            <h:panelGrid columns="9" cellpadding="10">
+                <ui:include src="/Docente/autoevaluacionDocente/cargaLabor/CargaExtension.xhtml" />
+            </h:panelGrid>
+        	</p:tab>
+        	<p:tab title="Capacitacion">
+            <h:panelGrid columns="9" cellpadding="10">
+                <ui:include src="/Docente/autoevaluacionDocente/cargaLabor/CargaCapacitacion.xhtml" />
+            </h:panelGrid>
+        	</p:tab>
+        	<p:tab title="Otros">
+            <h:panelGrid columns="9" cellpadding="10">
+                <ui:include src="/Docente/autoevaluacionDocente/cargaLabor/CargaOtros.xhtml" />
+            </h:panelGrid>
+        	</p:tab>
+        </p:tabView>
+	</h:form>
+</h:body>
+</html>

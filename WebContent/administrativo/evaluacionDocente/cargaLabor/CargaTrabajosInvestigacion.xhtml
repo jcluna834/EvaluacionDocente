@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<script type="text/javascript" src="resources/js/primefaces-calendar-locale.js"></script>
+</h:head>	
+<h:body>
+	<p:outputPanel id="panelDocenteTrabajosInvestigacion">
+		<div class="container-fluid">
+			<p:separator/>
+			<h:form id="formDocenteTrabajosInvestigacion">
+				<p:outputPanel rendered="#{evaluacionDocenteControl.docenteTrabajosInvestigacionData.size()>0}">
+					<p:dataTable 
+						value="#{evaluacionDocenteControl.docenteTrabajosInvestigacionData}" 
+						var="trbinvest"
+						paginator="#{evaluacionDocenteControl.docenteTrabajosInvestigacionData.size() gt 10}"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						currentPageReportTemplate="Página: {currentPage} de {totalPages}"
+						rowsPerPageTemplate="10,20,30" selection="#{evaluacionDocenteControl.selectTrabInv}"
+						id="docentesTableTrabInv" selectionMode="single" rowKey="#{trbinvest.actoAdmin}"
+						rows="10" resizableColumns="true" filteredValue="#{evaluacionDocenteControl.filteredTrabajosInvestigacion}">
+						
+						<p:ajax event="rowSelect" update=":tabForm:tabLabor:formDocenteTrabajosInvestigacion:docDetalleTrabajosInvestigacion" oncomplete="docDialogoTrabajosInvestigacion.show()"/>
+						
+						<f:facet name="header">
+							<h:outputText value="Docentes de trabajos de Investigacion" />
+						</f:facet>
+						<p:column style="text-align:center;" headerText="IDENTIFICACIÓN" filterBy="#{trbinvest.identificacion}" rendered="false">
+							<h:outputText value="#{trbinvest.identificacion}" />
+						</p:column>
+						<p:column headerText="NOMBRES DOCENTE" filterBy="#{trbinvest.nombresDocente}">
+							<h:outputText value="#{trbinvest.nombresDocente}" />
+						</p:column>
+						<p:column  style="text-align:center;" headerText="NOMBRES ESTUDIANTE">
+							<h:outputText value="#{trbinvest.nombresEstudiante}" />
+						</p:column>
+						<p:column  style="text-align:center;" headerText="OBJETIVO" filterBy="#{trbinvest.objetivo}">
+							<h:outputText value="#{trbinvest.objetivo}" />
+						</p:column>
+						<p:column  styleClass="hidden-phone hidden-tablet" style="text-align:center;" headerText="ACTO DMIN">
+							<h:outputText value="#{trbinvest.actoAdmin}" />
+						</p:column>
+					</p:dataTable>
+				</p:outputPanel>
+				
+				<p:dialog header="Docente Detalles" widgetVar="docDialogoTrabajosInvestigacion" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+		            <p:panelGrid id="docDetalleTrabajosInvestigacion" columns="2">
+		                <f:facet name="header">
+		                    <h:outputText value="Docente trabajos de investigación" />
+		                </f:facet>
+		                <h:outputText value="Identificación:" />
+		                <h:outputText value="#{evaluacionDocenteControl.selectTrabInv.identificacion}" />
+		                <h:outputText value="Nombre Docente" />
+		                <h:outputText value="#{evaluacionDocenteControl.selectTrabInv.nombresDocente}" />
+		                <h:outputText value="Objetivo:" />
+		                <h:outputText value="#{evaluacionDocenteControl.selectTrabInv.objetivo}"/>
+		                <h:outputText value="Nombres estudiante:" />
+		                <h:outputText value="#{evaluacionDocenteControl.selectTrabInv.nombresEstudiante}"/>
+		                <h:outputText value="ACTO ADMIN:" />
+		                <h:outputText value="#{evaluacionDocenteControl.selectTrabInv.actoAdmin}"/>
+		            </p:panelGrid>
+			    </p:dialog>
+				
+				<p:outputPanel rendered="#{evaluacionDocenteControl.docenteTrabajosInvestigacionData.size()==0}">
+					<div class="ui-messages-warn ui-corner-all">
+						<span class="ui-messages-warn-icon"></span>
+						<ul>
+							<li><span class="ui-messages-warn-detail">No hay registros de DocenteTrabajosInvestigacion</span>
+							</li>
+						</ul>
+					</div>
+				</p:outputPanel>
+			</h:form>
+			
+		</div>
+	</p:outputPanel>
+</h:body>
+</html>

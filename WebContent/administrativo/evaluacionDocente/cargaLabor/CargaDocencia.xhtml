@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+	
+<h:head>
+	<script type="text/javascript" src="resources/js/primefaces-calendar-locale.js"></script>
+</h:head>	
+<h:body>
+	<p:outputPanel id="panelDocenteDocencia">
+		<div class="container-fluid">
+			<p:separator/>
+			<h:form id="formDocenteDocencia">
+				<p:outputPanel rendered="#{evaluacionDocenteControl.docenteDocenciaData.size()>0}">
+					<p:dataTable 
+						value="#{evaluacionDocenteControl.docenteDocenciaData}" 
+						var="docentedocencia"
+						paginator="#{evaluacionDocenteControl.docenteDocenciaData.size() gt 10}"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						currentPageReportTemplate="Página: {currentPage} de {totalPages}"
+						rowsPerPageTemplate="10,20,30" selection="#{evaluacionDocenteControl.selectDocencia}"
+						id="docentesTableDocencia" selectionMode="single" rowKey="#{docentedocencia.nombreMateria}"
+						rows="10" resizableColumns="true" filteredValue="#{evaluacionDocenteControl.filteredDocencia}">
+						
+						<p:ajax event="rowSelect" update=":tabForm:tabLabor:formDocenteDocencia:docDetalleDocencia" oncomplete="docDialogoDocencia.show()"/>
+						
+						<f:facet name="header">
+							<h:outputText value="Docentes docencia directa" />
+						</f:facet>
+						<p:column headerText="IDENTIFICACIÓN"  style="text-align:center;" filterBy="#{docentedocencia.identificacion}" rendered="false">
+							<h:outputText value="#{docentedocencia.identificacion}" />
+						</p:column>
+						<p:column headerText="NOMBRE DOCENTE" style="text-align:center;" filterBy="#{docentedocencia.nombresDocente}">
+							<h:outputText value="#{docentedocencia.nombresDocente}" />
+						</p:column>
+						<p:column headerText="NOMBRE MATERIA" filterBy="#{docentedocencia.nombreMateria}">
+							<h:outputText value="#{docentedocencia.nombreMateria}"/>
+						</p:column>
+						<p:column headerText="GRUPO" style="text-align:center;">
+							<h:outputText value="#{docentedocencia.grupo}" />
+						</p:column>
+						<p:column headerText="NOMBRE PROGRAMA" style="text-align:center;" >
+							<h:outputText value="#{docentedocencia.nombrePrograma}" />
+						</p:column>
+					</p:dataTable>
+					
+					<h3>Descargar Archivos</h3>	
+					<div style="float:left; text-align: center">								
+						<p:commandButton value="Descargar" ajax="false">
+							<p:graphicImage name="/images/excel2.png" width="90"/><br></br>
+							<p:dataExporter type="xls" target="docentesTableDocencia" fileName="ExaminarLabor" />						
+						</p:commandButton>
+					</div>	
+					<div style="float:left; text-align: center">
+						<p:commandButton value="Descargar" ajax="false">
+							<p:graphicImage name="/images/pdf.png" width="69"/><br></br>
+							<p:dataExporter type="pdf" target="docentesTableDocencia" fileName="ExaminarLabor" />						
+						</p:commandButton>
+					</div>
+				</p:outputPanel>
+				
+				<p:dialog header="Docente Detalles" widgetVar="docDialogoDocencia" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+		            <p:panelGrid id="docDetalleDocencia" columns="2">
+		                <f:facet name="header">
+		                    <h:outputText value="Docente de docencia" />
+		                </f:facet>
+		                <h:outputText value="Identificación:" />
+		                <h:outputText value="#{evaluacionDocenteControl.selectDocencia.identificacion}" />
+		                <h:outputText value="Nombre Docente" />
+		                <h:outputText value="#{evaluacionDocenteControl.selectDocencia.nombresDocente}" />
+		                <h:outputText value="Materia:" />
+		                <h:outputText value="#{evaluacionDocenteControl.selectDocencia.nombreMateria}"/>
+		                <h:outputText value="Grupo:" />
+		                <h:outputText value="#{evaluacionDocenteControl.selectDocencia.grupo}"/>
+		                <h:outputText value="Programa:" />
+		                <h:outputText value="#{evaluacionDocenteControl.selectDocencia.nombrePrograma}"/>
+		            </p:panelGrid>
+			    </p:dialog>
+				
+				<p:outputPanel rendered="#{evaluacionDocenteControl.docenteDocenciaData.size()==0}">
+					<div class="ui-messages-warn ui-corner-all">
+						<span class="ui-messages-warn-icon"></span>
+						<ul>
+							<li><span class="ui-messages-warn-detail">No hay registros de DocenteDocencia</span>
+							</li>
+						</ul>
+					</div>
+				</p:outputPanel>
+			</h:form>
+		</div>
+	</p:outputPanel>
+</h:body>
+</html>

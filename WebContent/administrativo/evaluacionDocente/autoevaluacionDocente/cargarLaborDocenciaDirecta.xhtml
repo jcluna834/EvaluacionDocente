@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<script type="text/javascript"
+		src="resources/js/primefaces-calendar-locale.js"></script>
+</h:head>
+<h:body>
+	<p:outputPanel id="panelDocenteDocencia">
+		<div class="container-fluid">
+			<h3 style="color: #26467E">Labor en Docencia Directa</h3>
+			<p:messages id="messages" showDetail="false" autoUpdate="true" closable="true" showSummary="true"/>			
+			<h:form id="formDocenteDocencia">
+				<p:outputPanel rendered="#{evaluacionDocenteControl.docenteDocenciaData.size()>0}">
+					<p:outputPanel rendered="#{evaluacionDocenteControl.auxiliar.get(0).cantidad==0}">
+						<p:dataTable id="autoevaluacion"
+							value="#{evaluacionDocenteControl.docenteDocenciaData}"
+							var="docentedocencia"
+							paginator="#{evaluacionDocenteControl.docenteDocenciaData.size() gt 10}"
+							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							currentPageReportTemplate="Página: {currentPage} de {totalPages}"
+							rowsPerPageTemplate="10,20,30" 
+							selectionMode="single" rowKey="#{docentedocencia.nombreMateria}"
+							rows="10" resizableColumns="true">	
+							<f:facet name="header">
+								<h:outputText value="Labor en docencia directa" />
+							</f:facet>
+							<!-- <p:column headerText="IDENTIFICACIÓN" style="text-align:center;"
+								rendered="false">
+								<h:outputText value="#{docentedocencia.identificacion}" />
+							</p:column> -->
+							<p:column >
+								<f:facet name="header">
+									<h:outputText value="IDENTIFICACIÓN" />
+								</f:facet>
+								<h:outputText value="#{docentedocencia.identificacion}" />
+							</p:column>
+							<p:column headerText="NOMBRE MATERIA">
+								<h:outputText value="#{docentedocencia.nombreMateria}" />
+							</p:column>
+							<p:column headerText="GRUPO" style="text-align:center;"
+								width="10%">
+								<h:outputText value="#{docentedocencia.grupo}" />
+							</p:column>
+							<p:column headerText="EVALUACION (0-100)" style="text-align:center;">
+								<p:selectOneMenu value="#{evaluacionDocenteControl.console}"
+									id="calificacionAutoevaluacion"
+									style="width:200px" required="false"
+									valueChangeListener="#{evaluacionDocenteControl.updateCalificacion}">
+									<f:selectItem itemLabel="Seleccione un valor" itemValue="" />
+									<f:selectItem itemLabel="1" itemValue="1" />
+									<f:selectItem itemLabel="10" itemValue="10" />
+									<f:selectItem itemLabel="20" itemValue="20" />
+									<f:selectItem itemLabel="30" itemValue="30" />
+									<f:selectItem itemLabel="40" itemValue="40" />
+									<f:selectItem itemLabel="50" itemValue="50" />
+									<f:selectItem itemLabel="60" itemValue="60" />
+									<f:selectItem itemLabel="70" itemValue="70" />
+									<f:selectItem itemLabel="80" itemValue="80" />
+									<f:selectItem itemLabel="90" itemValue="90" />
+									<f:selectItem itemLabel="100" itemValue="100" />
+								</p:selectOneMenu>
+							</p:column>
+							<f:facet name="footer">
+								<p:commandButton value="Guardar Autoevaluación"
+									icon="ui-icon-disk"									
+									actionListener="#{evaluacionDocenteControl.guardarAutoevaluacionDocencia(docentedocencia.identificacion, docentedocencia.periodo)}" />
+							</f:facet> 
+						</p:dataTable>
+						<br />
+						<div>
+							<h:form id="observacionDocencia">
+								<h4 style="color: #26467E">Observaciones:</h4>
+								<p:inputTextarea id="observcionDocencia" rows="6" cols="33" autoResize="false" valueChangeListener="#{evaluacionDocenteControl.updateObs}" value="#{evaluacionDocenteControl.obs}"/>
+								<br /> <br />
+								<p:commandButton id="guardarEvaluacion"
+									value="Guardar observacion"
+									icon="ui-icon-disk"
+									actionListener="#{evaluacionDocenteControl.guardarObservacionDocencia()}" />
+							</h:form>
+						</div>
+					</p:outputPanel>
+					<p:outputPanel rendered="#{evaluacionDocenteControl.auxiliar.get(0).cantidad>0}">
+						<div class="ui-messages-warn ui-corner-all">
+							<span class="ui-messages-warn-icon"></span>
+							<ul>
+								<li><span class="ui-messages-warn-detail">Ya ha realizado la autoevaluación para esta labor</span></li>
+							</ul>
+						</div>
+					</p:outputPanel>
+				</p:outputPanel>
+				<p:outputPanel rendered="#{evaluacionDocenteControl.docenteDocenciaData.size()==0}">
+					<div class="ui-messages-warn ui-corner-all">
+						<span class="ui-messages-warn-icon"></span>
+						<ul>
+							<li><span class="ui-messages-warn-detail">No hay
+									registros de DocenteDocencia</span></li>
+						</ul>
+					</div>
+				</p:outputPanel>
+			</h:form>
+		</div>
+	</p:outputPanel>
+</h:body>
+</html>

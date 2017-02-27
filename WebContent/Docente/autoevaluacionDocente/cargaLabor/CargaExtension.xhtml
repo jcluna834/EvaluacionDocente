@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<script type="text/javascript" src="resources/js/primefaces-calendar-locale.js"></script>
+</h:head>	
+<h:body>
+	<p:outputPanel id="panelDocenteExtension">
+		<div class="container-fluid">
+			<p:separator/>
+			<h:form id="formDocenteExtension">
+				<p:outputPanel rendered="#{evaluacionDocenteControl.docenteExtensionData.size()>0}">
+					<p:dataTable 
+						value="#{evaluacionDocenteControl.docenteExtensionData}" 
+						var="extension"
+						paginator="#{evaluacionDocenteControl.docenteExtensionData.size() gt 10}"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						currentPageReportTemplate="Página: {currentPage} de {totalPages}"
+						rowsPerPageTemplate="10,20,30"
+						rows="10"
+						resizableColumns="true">
+						<f:facet name="header">
+							<h:outputText value="Carga de docentes de Servicio" />
+						</f:facet>
+						<p:column style="text-align:center;">
+							<f:facet name="header">
+								<h:outputText value="IDENTIFICACIÓN"></h:outputText>
+							</f:facet>
+							<h:outputText value="#{extension.identificacion}" />
+						</p:column>
+						<p:column >
+							<f:facet name="header">
+								<h:outputText value="NOMBRES DOCENTE"></h:outputText>
+							</f:facet>
+							<h:outputText value="#{extension.nombresDocente}" />
+						</p:column>
+						<p:column  style="text-align:center;">
+							<f:facet name="header">
+								<h:outputText value="RESOLUCION"></h:outputText>
+							</f:facet>
+							<h:outputText value="#{extension.resolucion}" />
+						</p:column>
+						<p:column  style="text-align:center;">
+							<f:facet name="header">
+								<h:outputText value="NOMBRE DEL PROYECTO"></h:outputText>
+							</f:facet>
+							<h:outputText value="#{extension.nombreProyecto}" />
+						</p:column>
+						<p:column  style="text-align:center;">
+							<f:facet name="header">
+								<h:outputText value="FECHA INICIO"></h:outputText>
+							</f:facet>
+							<h:outputText value="#{extension.fechaInicio}" />
+						</p:column>
+						<p:column  style="text-align:center;">
+							<f:facet name="header">
+								<h:outputText value="FECHA FIN"></h:outputText>
+							</f:facet>
+							<h:outputText value="#{extension.fechaFin}" />
+						</p:column>
+					</p:dataTable>
+				</p:outputPanel>
+				
+				<p:outputPanel rendered="#{evaluacionDocenteControl.docenteExtensionData.size()==0}">
+					<div class="ui-messages-warn ui-corner-all">
+						<span class="ui-messages-warn-icon"></span>
+						<ul>
+							<li><span class="ui-messages-warn-detail">No hay registros de DocenteExtension</span>
+							</li>
+						</ul>
+					</div>
+				</p:outputPanel>
+			</h:form>
+			
+		</div>
+	</p:outputPanel>
+</h:body>
+</html>

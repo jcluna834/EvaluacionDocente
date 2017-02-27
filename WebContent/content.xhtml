@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Content</title>
+</h:head>
+<h:body>
+	<p:panel id="panelMainEvaluacionDocente">
+			<div class="container-fluid">	
+				<div class="row-fluid">
+					<h3 style="color:#071CBB ">Configuración de Evaluación Docente</h3>
+					<h4 style="color:#071CBB ">Facultad de Ingeniería Electrónica y Telecomunicaciones</h4>
+					<h4 style="color:#071CBB ">Departamento de Sistemas</h4>
+					<p:separator/>
+					<p:outputPanel>
+						<h:outputText value="#{evaluacionDocenteControl.nombreUsuario(evaluacionDocenteControl.idJefe)}" style="width:500px;"/>
+					</p:outputPanel>
+				</div>
+			</div>
+			<div class="container-fluid">
+				<div class="row-fluid">
+					<p:outputPanel id="panelContentEvaluacionDocente">
+						<p:outputPanel>
+							<ui:include src="#{evaluacionDocenteControl.ruta}" />
+						</p:outputPanel>
+					</p:outputPanel>
+
+				</div>
+			</div>
+	</p:panel>
+</h:body>
+</html>

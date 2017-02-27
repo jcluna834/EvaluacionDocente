@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+
+	<script type="text/javascript" src="resources/js/jquery.min.js"></script>
+	<script type="text/javascript" src="resources/js/jquery.reject.min.js"></script>
+	<script type="text/javascript" src="resources/js/jquery.reject.options.js"></script>
+	<script>
+   		$ = jQuery;
+   	</script>
+   	
+	<!-- Basic Page Needs
+  ================================================== -->
+	<meta name="description" content="" />
+	<meta name="author" content="" />
+
+	<!-- Mobile Specific Metas
+  ================================================== -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+	<link rel="shortcut icon" href="favicon.png" />
+	
+	<!-- CSS
+  ================================================== -->
+	<link rel="stylesheet" type="text/css" href="resources/css/base.css" />
+	<link rel="stylesheet" type="text/css" href="resources/css/skeleton.css" />
+	<link rel="stylesheet" type="text/css" href="resources/css/bootstrap-responsive.css" />
+	<link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css" />
+	<link rel="stylesheet" type="text/css" href="resources/css/styles.css" />
+	<link rel="stylesheet" type="text/css" href="resources/css/application.css" />
+	<link rel="stylesheet" type="text/css" href="resources/css/jquery.reject.css" />
+	<script type="text/javascript" src="resources/js/bootstrap.min.js"></script>
+	<ui:insert name="header"></ui:insert>
+	<title>Evaluacion Docente</title>	
+
+</h:head>
+
+<h:body>
+	<header>
+		<a href="http://www.unicauca.edu.co" id="escudoUnicauca"></a>
+		<p  class="separador"></p>
+		<p id="desc">Sistema de Evaluación Docente</p>
+	</header>
+	<h:form >
+
+	  <!--  <p:commandButton icon="ui-icon-key" id="btnAcceder" value="Iniciar Sesion" ajax="false" action="#{user.acceder()}" />-->
+	<br/><br/>
+    <div align="center">
+    
+	    <p:panel id="panel" header="Iniciar Sesión" style="width:350px; text-align:center" >
+	       	<h:panelGrid columns="2" >
+		    	<h:outputLabel for="usuario" value="Usuario*" />
+		        <p:inputText id="usuario" value="#{user.us.usuario}" />
+		        <h:outputLabel for="contrasena" value="Contraseña*" />
+		        <p:password  id="contrasena" value="#{user.us.pass}" />
+		        <br></br>
+		        <p:commandButton icon="ui-icon-key" id="btnAcceder" value="Iniciar Sesión" ajax="false" action="#{user.iniciarSesion()}" actionListener="#{user.validacion()}" />
+	        </h:panelGrid>
+	        <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+	    </p:panel>
+    </div>
+    
+    </h:form>
+	
+</h:body>
+</html>
+

@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<script type="text/javascript" src="resources/js/primefaces-calendar-locale.js"></script>
+</h:head>	
+<h:body>
+	<p:outputPanel id="panelDocenteAdministracion">
+		<div class="container-fluid">
+			<p:separator/>
+			<h:form id="formDocenteAdministracion">
+				<p:outputPanel rendered="#{evaluacionDocenteControl.docenteAdministracionData.size()>0}">
+					<p:dataTable 
+						value="#{evaluacionDocenteControl.docenteAdministracionData}" 
+						var="administracion"
+						paginator="#{evaluacionDocenteControl.docenteAdministracionData.size() gt 10}"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						currentPageReportTemplate="Página: {currentPage} de {totalPages}"
+						rowsPerPageTemplate="10,20,30" selection="#{evaluacionDocenteControl.selectAdmon}"
+						id="docentesTable" selectionMode="single" rowKey="#{administracion.descripcion}"
+						rows="10" resizableColumns="true" filteredValue="#{evaluacionDocenteControl.filteredAdministracion}">
+						
+						<p:ajax event="rowSelect" update=":tabForm:tabLabor:formDocenteAdministracion:docDetalleAdmin" oncomplete="docDialogoAdmin.show()"/>
+						
+						<f:facet name="header">
+							<h:outputText value="Docentes de Administracion" />
+						</f:facet>
+						<p:column headerText="IDENTIFICACIÓN" style="text-align:center;" filterBy="#{administracion.identificacion}" rendered="false">							
+							<h:outputText value="#{administracion.identificacion}" />
+						</p:column>						
+						<p:column headerText="NOMBRES DOCENTE" style="text-align:center;" filterBy="#{administracion.nombresDocente}">
+							<h:outputText value="#{administracion.nombresDocente}" />
+						</p:column>
+						<p:column headerText="DESCRIPCION" style="text-align:center;" filterBy="#{administracion.descripcion}">
+							<h:outputText value="#{administracion.descripcion}" />
+						</p:column>
+						<p:column headerText="UNIDAD" style="text-align:center;">
+							<h:outputText value="#{administracion.unidad}" />
+						</p:column>
+						<p:column  styleClass="hidden-phone hidden-tablet" style="text-align:center;">
+							<f:facet name="header">
+								<h:outputText value="ACTO DMIN"></h:outputText>
+							</f:facet>
+							<h:outputText value="#{administracion.actoAdmin}" />
+						</p:column>
+					</p:dataTable>
+				</p:outputPanel>
+				
+				<p:dialog header="Docente Detalles" widgetVar="docDialogoAdmin" modal="true" showEffect="fade" hideEffect="fade" resizable="false" >
+		            <p:panelGrid id="docDetalleAdmin" columns="2">
+		                <f:facet name="header">
+		                    <h:outputText value="Docente de Administracion" />
+		                </f:facet>
+		                <h:outputText value="Identificación:" />
+		                <h:outputText value="#{evaluacionDocenteControl.selectAdmon.identificacion}" />
+		                <h:outputText value="Nombre Docente" />
+		                <h:outputText value="#{evaluacionDocenteControl.selectAdmon.nombresDocente}" />
+		                <h:outputText value="Descripción:" />
+		                <h:outputText value="#{evaluacionDocenteControl.selectAdmon.descripcion}"/>
+		                <h:outputText value="ACTO ADMIN:" />
+		                <h:outputText value="#{evaluacionDocenteControl.selectAdmon.actoAdmin}"/>
+		            </p:panelGrid>
+			    </p:dialog>
+				
+				<p:outputPanel rendered="#{evaluacionDocenteControl.docenteAdministracionData.size()==0}">
+					<div class="ui-messages-warn ui-corner-all">
+						<span class="ui-messages-warn-icon"></span>
+						<ul>
+							<li><span class="ui-messages-warn-detail">No hay registros de DocenteAdministracion</span>
+							</li>
+						</ul>
+					</div>
+				</p:outputPanel>
+			</h:form>
+			
+		</div>
+	</p:outputPanel>
+</h:body>
+</html>

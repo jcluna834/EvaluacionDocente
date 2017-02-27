@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<script type="text/javascript" src="resources/js/primefaces-calendar-locale.js"></script>
+</h:head>	
+<h:body>
+	<h:form>		
+	    <p:growl id="msgs" showDetail="true" />
+	    <p:panel header="Gestión Cuestionario" style="margin-bottom:10px;">
+	    	<br></br>
+	    	<p:commandButton value="Crear Cuestionario" update="msgs" actionListener="#" icon="ui-icon-plusthick" />
+	    	<p:separator/>
+	        <h:panelGrid columns="3" cellpadding="5">
+	            <p:outputLabel for="country" value="Buscar por tipo:" />
+	            <p:selectOneMenu id="country" value="#{controladorCuestionario.tipo}" style="width:200px">
+	                <f:selectItem itemLabel="Seleccionar Tipo" itemValue="" noSelectionOption="true" />
+	                <f:selectItems value="#{controladorCuestionario.tipos}" />
+	            </p:selectOneMenu>
+	            <p:commandButton value="Crear Cuestionario" update="msgs" actionListener="#" icon="ui-icon-plusthick" />
+	    		            
+	        </h:panelGrid>
+	        <br></br>
+	        <p:dataTable var="cuestionario" value="#{controladorCuestionario.cuestionarios}" scrollable="true" scrollHeight="150">
+		        <p:column headerText="Nombre Cuestionario" >
+		            <h:outputText value="#{cuestionario.nombre}" />
+		        </p:column>
+		        <p:column headerText="Departamento" >
+		            <h:outputText value="#{cuestionario.departamento}" />
+		        </p:column>
+		        <p:column headerText="Acciones"  style="text-align: center;" >		     
+		        	<p:commandButton actionListener="#" icon="ui-icon-search" style="height:20px"/>
+		            <p:commandButton actionListener="#" icon="ui-icon-pencil" style="height:20px"/>
+		            <p:commandButton actionListener="#" icon="ui-icon-closethick" style="height:20px"/>
+		            	
+		        </p:column>
+		    </p:dataTable>
+	        
+	        
+	 
+	        
+	 
+	        
+	    </p:panel>
+	</h:form>
+</h:body>
+</html>

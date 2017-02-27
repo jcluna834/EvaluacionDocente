@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<script type="text/javascript" src="resources/js/primefaces-calendar-locale.js"></script>
+</h:head>	
+<h:body>
+	<p:outputPanel id="panelDocenteAsesoria">
+		<div class="container-fluid">
+			<p:separator/>
+			<h:form id="formDocenteAsesoria">
+				<p:outputPanel rendered="#{evaluacionDocenteControl.docenteAsesoriaData.size()>0}">
+					<p:dataTable 
+						value="#{evaluacionDocenteControl.docenteAsesoriaData}" 
+						var="asesoria"
+						paginator="#{evaluacionDocenteControl.docenteAsesoriaData.size() gt 10}"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						currentPageReportTemplate="Página: {currentPage} de {totalPages}"
+						rowsPerPageTemplate="10,20,30" selection="#{evaluacionDocenteControl.selectAsesoria}"
+						id="docentesTable" selectionMode="single" rowKey="#{asesoria.descripcion}"
+						rows="10" resizableColumns="true" filteredValue="#{evaluacionDocenteControl.filteredAsesoria}">
+						
+						<p:ajax event="rowSelect" update=":tabForm:tabLabor:formDocenteAsesoria:docDetalle" oncomplete="docDialogo.show()"/>
+						
+						<f:facet name="header">
+							<h:outputText value="Docentes de Asesoria" />
+						</f:facet>
+						<p:column headerText="IDENTIFICACIÓN" style="text-align:center;" filterBy="#{asesoria.identificacion}" rendered="false">							
+							<h:outputText value="#{asesoria.identificacion}" />
+						</p:column>						
+						<p:column headerText="NOMBRES DOCENTE" style="text-align:center;" filterBy="#{asesoria.nombresDocente}">
+							<h:outputText value="#{asesoria.nombresDocente}" />
+						</p:column>
+						<p:column headerText="DESCRIPCION" style="text-align:center;" filterBy="#{asesoria.descripcion}">
+							<h:outputText value="#{asesoria.descripcion}" />
+						</p:column>
+						<p:column headerText="UNIDAD" style="text-align:center;">
+							<h:outputText value="#{asesoria.unidad}" />
+						</p:column>
+						<p:column  styleClass="hidden-phone hidden-tablet" style="text-align:center;">
+							<f:facet name="header">
+								<h:outputText value="ACTO DMIN"></h:outputText>
+							</f:facet>
+							<h:outputText value="#{asesoria.actoAdmin}" />
+						</p:column>
+					</p:dataTable>
+				</p:outputPanel>
+				
+				<p:dialog header="Docente Detalles" widgetVar="docDialogo" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+		            <p:panelGrid id="docDetalle" columns="2">
+		                <f:facet name="header">
+		                    <h:outputText value="Docente de Asesoria" />
+		                </f:facet>
+		                <h:outputText value="Identificación:" />
+		                <h:outputText value="#{evaluacionDocenteControl.selectAsesoria.identificacion}" />
+		                <h:outputText value="Nombre Docente" />
+		                <h:outputText value="#{evaluacionDocenteControl.selectAsesoria.nombresDocente}" />
+		                <h:outputText value="Descripción:" />
+		                <h:outputText value="#{evaluacionDocenteControl.selectAsesoria.descripcion}"/>
+		                <h:outputText value="ACTO ADMIN:" />
+		                <h:outputText value="#{evaluacionDocenteControl.selectAsesoria.actoAdmin}"/>
+		            </p:panelGrid>
+			    </p:dialog>
+				
+				<p:outputPanel rendered="#{evaluacionDocenteControl.docenteAsesoriaData.size()==0}">
+					<div class="ui-messages-warn ui-corner-all">
+						<span class="ui-messages-warn-icon"></span>
+						<ul>
+							<li><span class="ui-messages-warn-detail">No hay registros de DocenteAsesoria</span>
+							</li>
+						</ul>
+					</div>
+				</p:outputPanel>
+			</h:form>
+			
+		</div>
+	</p:outputPanel>
+</h:body>
+</html>

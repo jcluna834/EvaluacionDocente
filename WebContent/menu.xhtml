@@ -1,0 +1,149 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<link rel="stylesheet" type="text/css" href="resources/css/styles-menu.css" />
+</h:head>
+<h:body>
+	<div class="ui-messages-info ui-corner-all" id="menuTitle">
+		<span class="ui-messages-info-detail"><b>Menú de Usuario</b></span>
+	</div>
+	
+	<div class="ui-messages-error ui-corner-all" id="menuTitle" style="#{user.notificar}">
+		<span class="ui-messages-eror-detail"><b>Usted tiene evaluaciones pendientes.</b></span>
+	</div>
+	
+	<h:form id="formMenu" >
+	
+	   <p:accordionPanel multiple="true" activeIndex="null">
+			<p:tab title="Decano" rendered="#{user.decano}">
+				<h:panelGrid columns="1" cellpadding="3" style="width: 250%">
+					<p:menu toggleable="true">
+						<p:menuitem value="Realizar evaluación"
+							actionListener="#{evaluacionDocenteControl.cargaJefeDepto('JefesDepto')}"
+							update=":mainContentPanel" icon="ui-icon-disk" />
+					</p:menu>
+				</h:panelGrid>
+			</p:tab>
+	    
+	    	<p:tab title="Jefe de Departamento" rendered="#{user.jefeDep}">
+	            <h:panelGrid columns="1" cellpadding="5" style="width: 150%">    
+	            	<p:menu toggleable="true" >					         
+		                <p:menuitem value="Examinar Labor Docente"
+						actionListener="#{evaluacionDocenteControl.loadLaborData()}"
+						title="Cargar Labor Docente" update=":mainContentPanel" />					
+					</p:menu>
+					<p:menu toggleable="true" >					         
+		                <p:menuitem value="Seguimiento y Control"
+						actionListener="#{evaluacionDocenteControl.CantEvaluaciones()}"
+						title="Cargar Labor Docente" update=":mainContentPanel" />					
+					</p:menu>
+					<p:accordionPanel multiple="true" activeIndex="null" >
+				        <p:tab title="Asignar jefes de labor" rendered="#{user.asigJefeLabor}">
+				            <h:panelGrid columns="2" cellpadding="3" >               
+				                <p:menu toggleable="true" >
+				                	<p:menuitem value="Investigación"
+											actionListener="#{evaluacionDocenteControl.cargaVRI()}"
+											update=":mainContentPanel" icon="ui-icon-disk" />
+									<p:menuitem value="Asesoria"
+											actionListener="#{evaluacionDocenteControl.cargaActividadAsesoria()}"
+											update=":mainContentPanel" icon="ui-icon-disk" />
+									<p:menuitem value="Administracion"
+											actionListener="#{evaluacionDocenteControl.cargaActividadAdministracion()}"
+											update=":mainContentPanel" icon="ui-icon-disk" />
+				                </p:menu>
+				            </h:panelGrid>
+				        </p:tab>
+				        <p:tab title="Reporte Consolidado" >
+				        	<h:panelGrid columns="2" cellpadding="3" >
+				        		<p:menu toggleable="true" >
+				        			<p:menuitem value="Reporte"
+				        				title="Generar Reporte"
+				        				update=":mainContentPanel"
+				        				icon="ui-icon-document"
+				        				actionListener="#{evaluacionDocenteControl.generarReporte()}" />
+				        		</p:menu>
+				        	</h:panelGrid>
+				        </p:tab>
+				        
+				        <p:tab title="Realizar Evaluación">
+							<h:panelGrid columns="2" cellpadding="3">
+								<p:menu toggleable="true">
+									<p:menuitem value="Jefes de Investigación"
+										actionListener="#{evaluacionDocenteControl.cargaJefesInvestigacion('JefesInvestigacion')}"
+										update=":mainContentPanel" icon="ui-icon-disk" />
+									<p:menuitem value="Jefes de Asesoria"
+										actionListener="#{evaluacionDocenteControl.cargaJefesAsesoria('JefesAsesoria')}"
+										update=":mainContentPanel" icon="ui-icon-disk" />
+									<p:menuitem value="Servicio"
+										actionListener="#{evaluacionDocenteControl.cargaDocenteServicio(evaluacionDocenteControl.nombreUsuario(evaluacionDocenteControl.idJefe))}"
+										update=":mainContentPanel" icon="ui-icon-disk" />
+									<p:menuitem value="Extensión"
+										actionListener="#{evaluacionDocenteControl.cargaDocenteExtension(evaluacionDocenteControl.nombreUsuario(evaluacionDocenteControl.idJefe))}"
+										update=":mainContentPanel" icon="ui-icon-disk" />
+									<p:menuitem value="Capacitación"
+										actionListener="#{evaluacionDocenteControl.cargaDocenteCapacitacion(evaluacionDocenteControl.nombreUsuario(evaluacionDocenteControl.idJefe))}"
+										update=":mainContentPanel" icon="ui-icon-disk" />
+								</p:menu>
+							</h:panelGrid>
+						</p:tab>
+				        
+				    </p:accordionPanel>
+	            </h:panelGrid>
+	        </p:tab>
+	        
+	        <p:tab title="Jefe de Labor" rendered="#{user.jefeLab}">
+	        	<h:panelGrid columns="1" cellpadding="3" style="width: 150%">    
+	        		<p:accordionPanel multiple="true" activeIndex="null">
+				        <p:tab title="Realizar Evaluación" rendered="#{user.realizarEva}">
+				            <h:panelGrid columns="2" cellpadding="3" >               
+				                <p:menu toggleable="true">
+				                	<p:menuitem value="Investigación"
+										actionListener="#{evaluacionDocenteControl.cargaGrupoJefeInvestigacion()}"
+										update=":mainContentPanel" icon="ui-icon-disk" />
+									<p:menuitem value="Asesoria"
+										actionListener="#{evaluacionDocenteControl.cargaGrupoJefeAsesoria()}"
+										update=":mainContentPanel" icon="ui-icon-disk" />
+				                </p:menu>
+				            </h:panelGrid>
+				        </p:tab>
+				    </p:accordionPanel>
+	        	</h:panelGrid>
+	        </p:tab>
+	        
+	        <p:tab title="Docente" rendered="#{user.docente}">
+	        	<h:panelGrid columns="1" cellpadding="3" style="width: 150%">   
+	        		<p:accordionPanel multiple="true" activeIndex="null">
+				        <p:tab title="Autoevaluación" rendered="#{user.autoEva}">
+				            <h:panelGrid columns="2" cellpadding="3" >               
+				                <p:menu toggleable="true">
+							        <p:menuitem value="Docencia"
+										actionListener="#{evaluacionDocenteControl.loadLaborDataAutoevaluacionDocencia()}"
+										update=":mainContentPanel" icon="ui-icon-pencil" />
+									<p:menuitem value="Trabajos Investigación"
+										actionListener="#{evaluacionDocenteControl.loadLaborDataAutoevaluacionTrabajosInvestigacion()}"
+										update=":mainContentPanel" icon="ui-icon-pencil" />
+									<p:menuitem value="Investigación"
+										actionListener="#{evaluacionDocenteControl.loadLaborDataAutoevaluacionInvestigacion()}"
+										update=":mainContentPanel" icon="ui-icon-pencil" />
+									<p:menuitem value="Asesoria"
+										actionListener="#{evaluacionDocenteControl.loadLaborDataAutoevaluacionAsesoria()}"
+										update=":mainContentPanel" icon="ui-icon-pencil" />
+									<p:menuitem value="Administracion"
+										actionListener="#{evaluacionDocenteControl.loadLaborDataAutoevaluacionAdministracion()}"
+										update=":mainContentPanel" icon="ui-icon-pencil" />
+				                </p:menu>
+				            </h:panelGrid>
+				        </p:tab>
+				    </p:accordionPanel> 
+	        	</h:panelGrid>
+	        </p:tab>
+	        
+	    </p:accordionPanel>
+		
+	</h:form>
+</h:body>
+</html>

@@ -1,0 +1,36 @@
+.ui-accordion .ui-accordion-content {
+	padding-top: 15px;
+	padding-bottom: 15px;
+	padding-right: 5px;
+	padding-left: 5px;
+}
+
+.accordionMenu .ui-helper-clearfix:after {
+	height: inherit !important;
+	width: inherit !important;
+}
+
+.ui-accordion .ui-accordion-header .ui-icon {
+	position: absolute !important;
+	right: .5em !important;
+	top: 50% !important;
+	margin-top: -8px !important;
+}
+
+div.ui-accordion-content
+{
+	padding: 8px 0 8px 2px !important;
+	overflow: hidden;
+	border: 0 !important;
+}
+
+.ui-accordion-header
+{
+	border-bottom-left-radius: 5px !important;
+	border-bottom-right-radius: 5px !important;	
+}
+
+.ui-accordion .ui-accordion-header .ui-icon {left: auto !important;}
+.accordionMenu .ui-accordion-content {padding: 0px !important;}
+.userMenuPanel .ui-panel-titlebar{cursor: pointer !important;}
+.userMenuPanel {border: 0px !important;}
